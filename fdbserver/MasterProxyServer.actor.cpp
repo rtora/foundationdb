@@ -976,7 +976,10 @@ ACTOR Future<Void> commitBatch(
 		// These changes to txnStateStore will be committed by the other proxy, so we simply discard the commit message
 		auto fcm = self->logAdapter->getCommitMessage();
 		storeCommits.emplace_back(fcm, self->txnStateStore->commit());
-		//discardCommit( dbgid, fcm, txnStateStore->commit() );
+		// UNCOMMENTED LINE BELOW
+		//Basically check if item is __cache
+		//if it is discard commit and send it to memcached
+		discardCommit( dbgid, fcm, txnStateStore->commit() );
 
 		if (initialState) {
 			//TraceEvent("ResyncLog", dbgid);
