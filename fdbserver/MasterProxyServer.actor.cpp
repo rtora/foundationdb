@@ -977,12 +977,12 @@ ACTOR Future<Void> commitBatch(
 		auto fcm = self->logAdapter->getCommitMessage();
 		storeCommits.emplace_back(fcm, self->txnStateStore->commit());
 		// UNCOMMENTED LINE BELOW
-		//Basically check if item is __cache
+		//Check if item is __cache
 		//if it is discard commit and send it to memcached
 		// if(){
 			
 		// }
-		discardCommit( self->dbgid, fcm, txnStateStore->commit() );
+		//discardCommit( dbgid, fcm, txnStateStore->commit() );
 
 		if (initialState) {
 			//TraceEvent("ResyncLog", dbgid);
@@ -2133,7 +2133,7 @@ ACTOR Future<Void> masterProxyServerCore(
 				lastCommit = now();
 
 				if (trs.size() || lastCommitComplete.isReady()) {
-					lastCommitComplete = commitBatch(&commitData, trs, batchBytes);
+					lastCommitComplete = Void(); //commitBatch(&commitData, trs, batchBytes);
 					addActor.send(lastCommitComplete);
 				}
 			}
