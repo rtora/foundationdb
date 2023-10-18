@@ -979,7 +979,10 @@ ACTOR Future<Void> commitBatch(
 		// UNCOMMENTED LINE BELOW
 		//Basically check if item is __cache
 		//if it is discard commit and send it to memcached
-		discardCommit( dbgid, fcm, txnStateStore->commit() );
+		// if(){
+			
+		// }
+		discardCommit( self->dbgid, fcm, txnStateStore->commit() );
 
 		if (initialState) {
 			//TraceEvent("ResyncLog", dbgid);
